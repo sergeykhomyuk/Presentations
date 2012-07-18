@@ -1,0 +1,981 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=windows-1251">
+        <meta name="viewport" content="width=1024" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <title>JavaScript: Patterns & Practices</title>   
+        <meta name="author" content="Sergey Homyuk" />
+
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="css/github.css" />
+        <script type="text/javascript" src="js/highlight.pack.js"></script>
+        <script type="text/javascript" src="js/knockout-2.1.0.js"></script>
+        <script>
+            hljs.initHighlightingOnLoad();
+        </script>
+        <link href="css/impress-demo.css" rel="stylesheet" />   
+    </head>
+
+<body class="impress-not-supported">
+
+<!--
+    For example this fallback message is only visible when there is `impress-not-supported` class on body.
+-->
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<!--
+    
+    Now that's the core element used by impress.js.
+    
+    That's the wrapper for your presentation steps. In this element all the impress.js magic happens.
+    It doesn't have to be a `<div>`. Only `id` is important here as that's how the script find it.
+    
+    You probably won't need it now, but there are some configuration options that can be set on this element.
+    
+    To change the duration of the transition between slides use `data-transition-duration="2000"` giving it
+    a number of ms. It defaults to 1000 (1s).
+    
+    You can also control the perspective with `data-perspective="500"` giving it a number of pixels.
+    It defaults to 1000. You can set it to 0 if you don't want any 3D effects.
+    If you are willing to change this value make sure you understand how CSS perspective works:
+    https://developer.mozilla.org/en/CSS/perspective
+    
+    But as I said, you won't need it for now, so don't worry - there are some simple but interesing things
+    right around the corner of this tag ;)
+    
+-->
+<div id="impress">
+
+    <!--
+        
+        Here is where interesting thing start to happen.
+        
+        Each step of the presentation should be an element inside the `#impress` with a class name
+        of `step`. These step elements are positioned, rotated and scaled by impress.js, and
+        the 'camera' shows them on each step of the presentation.
+        
+        Positioning information is passed through data attributes.
+        
+        In the example below we only specify x and y position of the step element with `data-x="-1000"`
+        and `data-y="-1500` attributes. This means that **the center** of the element (yes, the center)
+        will be positioned in point x = -1000px and y = -1500px of the presentation 'canvas'.
+        
+        It will not be rotated or scaled.
+        
+    -->
+    <div id="StartScreen" class="step slide" data-x="-3000" data-y="-1500" data-scale="1">
+        <q>
+            <b style="font-size: 120px;">JavaScript</b>
+            <br/>
+            Patterns &amp Practices
+        </q>
+        <q>
+            Сергей Хомюк <br/> 
+            shomyuk@intermedia.net
+        </q>
+    </div>
+    
+    <div id="WhatIsJavaScript" class="step slide" data-x="-2000" data-y="-1500">
+        <q style="text-align: center">
+            <b style="font-size: 120px;">JavaScript</b>
+            <br/><br/><br/> 
+            <b style="font-size: 250px;">?</b>
+        </q>
+    </div>
+
+    <div id="TwoYearsAgo" class="step slide" data-x="-1000" data-y="-1500">
+        <q style="text-align: center">
+            <h1>Два года назад</h1>
+        </q>
+            <pre >
+            <code class="javascript">
+function hide() {
+    var item = document.getElementById('item');
+    item.style.display = 'none';
+}                       
+                </code>
+            </pre>
+    </div>
+
+    <div id="YearAgo" class="step slide" data-x="0" data-y="-1500">
+        <q style="text-align: center; margin-top: 50px;">
+            <h1>Год назад</h1>
+        </q>
+            <pre >
+            <code class="javascript">
+var rows = $('.bookmarkRow').map(function (index) {
+    var key = $(this).attr('id').
+                replace(/bookmark\[(\d+,\d+)\]/, '$1');
+    var values = key.split(',');
+    var id = parseInt(values[0]);
+    var index = parseInt(values[1]);
+
+    var item = { ID: id, Index: index, Row: $(this) };
+    return item;
+});
+                </code>
+            </pre>
+    </div>
+    
+<div id="Now" class="step slide" data-x="1000" data-y="-1500">
+        <q style="text-align: center; margin-top: 20px;">
+            <h1>Сейчас</h1>
+        </q>
+            <pre >
+            <code class="javascript">
+define(['knockout', 'underscore', 'jquery', 'core'], 
+    function (ko, _, $, core) {        
+    'use strict';
+
+    return core.Class.inherit(core.ui.Wizard.fn, {
+            onCompleted: function () {
+                var data = this.service.getData();
+                this.service.createCase(data);
+                this.trigger(core.ui.Wizard.events.created, data);
+            }
+        });
+});
+                </code>
+            </pre>
+    </div>    
+    
+
+    <div id="Function" class="step slide" data-x="-2000" data-y="-750">
+        <q style="text-align: center">
+            <b style="font-size: 120px;">function<sup>*</sup></b>        
+        </q>
+            <pre >
+            <code class="javascript">
+// * - наше всё
+fuction hello() {
+    console.log('Hello world!');
+};
+                </code>
+            </pre>
+    </div>    
+    
+
+    <div id="FunctionAsScope" class="step slide" data-x="-1000" data-y="-0">
+        <q style="text-align: center">
+            <b style="font-size: 120px;">Область видимости</b><br/>
+        </q>
+            <pre >
+            <code class="javascript">
+​var i = 0;
+function foo() {
+    var i = 1;
+}
+foo();
+console.log(i); // 0;
+                </code>
+            </pre>
+    </div>
+    
+    <div id="FunctionAsScopeFor" class="step slide" data-x="0" data-y="0">
+        <pre >
+            <code class="javascript">
+​var sumOfSquares = 0;
+for(var j = 1; j < 5; j++) {
+    var tmp = j * j;
+    sumOfSquares += tmp;
+}
+console.log(tmp); // 16
+                </code>
+            </pre>
+    </div>
+    
+    <div id="FunctionAsScopeForReal" class="step slide" data-x="1000" data-y="0">
+        <pre >
+            <code class="javascript">
+​var sumOfSquares = 0;
+var j;
+var tmp;
+
+for(j = 1; j < 5; j++) {
+    tmp = j * j;
+    sumOfSquares += tmp;
+}
+console.log(tmp); // 16
+                </code>
+            </pre>
+    </div>
+    
+    <div id="FunctionAsScopeConflicts" class="step slide" data-x="2000" data-y="0">
+        <q style="text-align: center">
+            <b style="font-size: 120px;">Конфликты</b><br/>
+        </q>
+        <pre >
+            <code class="xml">
+&lt;script&gt;
+     function calculate() { /* ... */ }
+&lt;/script&gt;
+&lt;script&gt;
+     function calculate() { /* ... */ }
+&lt;/script&gt;
+&lt;script&gt;
+     calculate();
+&lt;/script&gt;
+                </code>
+            </pre>
+    </div>
+    
+    <div id="FunctionAsScopeModule" class="step slide" data-x="3000" data-y="0">
+        <q style="text-align: center">
+            <b style="font-size: 70px;">Module</b><br/>
+        </q>
+        <pre >
+                <code class="javascript">
+(function () {
+    // Module content
+    window.calculate = function (items) { /* ... */ }; // export
+}) ();
+                </code>
+            </pre>
+    </div>
+
+    <div id="FunctionAsScopeModuleSample" class="step slide" data-x="4000" data-y="0">
+        <pre >
+                <code class="javascript">
+(function () {
+    var events = [];
+    window.subscribe = function (event, handler) {
+        events.push({name : event, callback: handler});
+    };
+    window.publish = function (event, data) { /* ... */ };
+}) ();
+...
+subscribe('error', function(error) { /* ... */ });
+                </code>
+            </pre>
+    </div>    
+
+    <div id="FunctionAsScopeModuleNamespace" class="step slide" data-x="5000" data-y="0">
+        <q style="text-align: center">
+            <b style="font-size: 70px;">Namespace</b><br/>
+        </q>
+        <pre >
+                <code class="javascript">
+window.app = {};
+// ...
+app.utils = {
+    calc: function(items) { /* ... */ }
+};
+// ...
+var result = app.utils.calc([1, 2, 3]);
+                </code>
+            </pre>
+    </div>    
+
+    <div id="FunctionAsScopeModuleAndNamepspace" class="step slide" data-x="6000" data-y="0">
+        <q style="text-align: center">
+            <b style="font-size: 70px;">Module + Namespace</b><br/>
+        </q>
+        <pre >
+                <code class="javascript">
+// core.utils module
+(function ($, _) {
+    app.utils = {
+        max: function (items) { /* ... */ },
+        sum: function (items) { /* ... */ }
+    };    
+}) (jquery, underscore, app = app || {});
+...
+var max = app.utils.max([1, 2, 3, 4, 5]);
+                </code>
+            </pre>
+    </div>
+    
+    <div id="FunctionAsScopeAMD" class="step slide" data-x="7000" data-y="0">
+        <q style="text-align: center">
+            <b style="font-size: 70px;">AMD</b><br/>
+            <b>Async Module Definition</b>
+        </q>
+        <pre >
+                <code class="javascript">
+define(['jquery', 'app/core'], function($, core) {
+    // module content
+    return {
+        // exports
+    };
+});
+                </code>
+            </pre>
+    </div>
+    
+    <div id="FunctionAsScopeRequireJs" class="step slide" data-x="8000" data-y="0">
+        <q style="text-align: center">
+            <b style="font-size: 70px;">require.js</b><br/><br/>
+            <img src="img/requirejs-logo.png" width="440" height="272"/>
+        </q>        
+    </div>
+    
+    <div id="FunctionAsScopeRequireJsSample" class="step slide" data-x="9000" data-y="0">
+        <pre >
+                <code class="xml">
+&lt;script data-main="js/main.js" src="js/libs/require.js" /&gt;
+
+// scripts/main.js
+requirejs.config({
+    baseUrl: 'js/app',
+    shim: { 
+        'underscore': {
+            exports: '_'
+        },
+    paths: {
+        jquery: 'libs/jquery/jquery-1.7.2.min',
+    }
+});
+require(['jquery', 'core'], function($, core) { /* ... */ });
+                </code>
+            </pre>
+    </div>
+
+    <div id="FunctionAsScopeRequireJsSampleReal" class="step slide" data-x="10000" data-y="0">
+        <pre >
+                <code class="javascript">
+// core.js
+define(['core.class', 'core.events', 'core.utils', 'ui/core.ui'], 
+function(Class, Events, utils, ui) {
+    return {
+    	Class: Class,
+    	Events: Events,
+    	utils: utils,
+    	ui: ui
+    };
+});        
+                                
+require(['core'], function(core) {
+    var User = core.Class.create();
+});
+                </code>
+            </pre>
+    </div>
+    
+    <div id="FunctionAsClass" class="step slide" data-x="-1000" data-y="750">
+        <q style="text-align: center">
+            <b style="font-size: 120px;">ООП <br/><br/> в JavaScript</b>
+        </q>        
+    </div>
+    
+    <div id="Div2" class="step slide" data-x="0" data-y="750">
+        <q style="text-align: center">
+            <b style="font-size: 60px;">Function - Конструктор</b>
+        </q>        
+        <pre >
+            <code class="javascript">
+var User = function(firstName, secondName) {
+    this.firstName = firstName;
+    this.secondName = secondName;
+};
+User.prototype.fullName = function() {
+    return this.firstName + ' ' + this.secondName;
+};
+
+var johnGold = new User('John', 'Gold');
+console.log(johnGold.fullName()); // John Gold
+            </code>
+        </pre>
+    </div>
+    
+    <div id="FunctionAsClassHash" class="step slide" data-x="1000" data-y="750">
+        <pre >
+                <code class="javascript">
+{   // Employee
+    'position': 'Developer',
+    'skillLevel': 'Senior',
+    constructor: function() { /* ... */ },
+    prototype: { // People
+        'firstName': 'John',
+        'lastName': 'Gold',
+        'fullName': function() { 
+                return this['firstName'] + this['lastName'];
+            },
+        constructor: function() { /* ... */ },
+        prototype: { /* ... */ } 
+    }
+}
+                </code>
+            </pre>
+    </div>
+    
+    <div id="FunctionAsClassIncapsulation" class="step slide" data-x="2000" data-y="750">
+        <q style="text-align: center; margin-top: 30px;">
+            <b style="font-size: 70px;">Private</b>
+        </q>        
+        <pre >
+                <code class="javascript">
+var User = function(name) {
+    var that = this;
+    that.name = name;
+    return {
+        getName: function() { return that.name },
+        setName: function(value) { that.name = value }; 
+    };    
+};
+                    
+var john = new User('John');
+console.log(john.name); // undefined
+                </code>
+            </pre>
+    </div>
+    
+    <div id="FunctionAsClassInterface" class="step slide" data-x="3000" data-y="750">
+        <q style="text-align: center; margin-top: 30px;">
+            <b style="font-size: 70px;">Interface</b>
+        </q>        
+        <pre >
+                <code class="javascript">
+var Events = {
+    subscribe: function(event, handler) { /* ... */ },
+    publish: function(event, data) { /* ... */ }
+};
+
+var Dialog = function() { /* ... */ };
+$.extend(Dialog.prototype, Events);
+
+var aboutDialog = new Dialog();
+aboutDialog.publish('closed');
+                </code>
+            </pre>
+    </div>
+    
+    
+    <div id="Patterns" class="step slide" data-x="-2000" data-y="1500">
+        <q style="text-align: center">
+            <b style="font-size: 120px;">Паттерны</b>
+        </q>        
+    </div>
+    
+
+    <div id="PatternsMVVM" class="step slide" data-x="-1000" data-y="2250">
+        <q style="text-align: center">
+            <b style="font-size: 120px;">MVVM</b><br/>
+            Model-View-ViewModel
+            <br/>
+        </q>        
+    </div>
+    
+    <div id="PatternsMVVMKnockoutJs" class="step slide" data-x="0" data-y="2250">
+        <q style="text-align: center">
+            <b style="font-size: 120px;">Knockout.js</b><br/>
+            <br/>
+        </q>        
+    </div>
+
+    <div id="PatternsMVVMKnockoutJsSample" class="step slide" data-x="1000" data-y="2250">   
+        <pre >
+                <code class="xml">
+&lt;input type="text" data-bind="value: firstName "/&gt;
+&lt;input type="text" data-bind="value: secondName "/&gt;
+&lt;span data-bind="text: fullName"&gt;/&lt;span&gt;
+            </code>
+        </pre>
+        <pre style="margin-top: -130px;">
+            <code class="javascript">                    
+    var ViewModel = function(firstName, secondName) {
+        this.firstName = ko.observable(firstName),
+        this.secondName = ko.observable(secondName),
+        this.fullName = ko.computed(function() {
+            return this.firstName() + ' ' this.secondName();
+        }, this);
+    };
+
+    ko.applyBindings(new ViewModel('John', 'Gold'));
+                </code>
+            </pre>
+    </div>
+    
+    <div id="PatternsMVVMKnockoutJsSampleReal" class="step slide" data-x="2000" data-y="2250">
+        <q style="text-align: center">
+            <b style="font-size: 120px;">Demo</b>
+            <br/>
+            <a style="color: blue; text-decoration: underline" href="http://jsfiddle.net/rniemeyer/LkqTU/">http://jsfiddle.net/rniemeyer/LkqTU</a>
+        </q>        
+    </div>
+    
+    <div id="PatternsMVVMKnockoutJsArchitectureController" class="step slide" data-x="3000" data-y="2250">   
+        <pre style="margin-top: -20px;">
+                <code class="javascript">
+var ApplicationController = core.Controller.create({
+    config: function(route) {
+        route.when('/', {
+                        template: 'templates/index.html',
+                        handler: this.home 
+                    });
+        route.when('user/create', { 
+                        template: 'templates/user/create.html', 
+                        handler: this.createUser 
+                    });        
+    },
+    // ...
+                </code>
+            </pre>
+    </div>
+
+    <div id="PatternsMVVMKnockoutJsArchitecture" class="step slide" data-x="4000" data-y="2250">   
+        <pre >
+                <code class="javascript">
+    // ...
+    createUser: function(template) {
+        var model = new CreateUserModel();
+        model.subscribe('user/created', this.onUserCreated);
+        
+        var viewModel = new CreateUserViewModel(model);
+        var content = _.template(template);
+        this.$element.html(content);
+        ko.applyBindings(viewModel, this.element);
+    },
+    onUserCreated: function(user) {
+        this.route.redirect('/user/:id', { id: user.id });
+    }
+    // ...
+                </code>
+            </pre>
+    </div>
+    
+
+    <div id="PatternsMVC" class="step slide" data-x="-1000" data-y="3000">
+        <q style="text-align: center">
+            <b style="font-size: 120px;">MVC</b><br/>
+            Model-View-Controller
+            <br/>
+        </q>        
+    </div>
+    
+    <div id="PatternsMVCBackbone" class="step slide" data-x="0" data-y="3000">
+        <q style="text-align: center">
+            <b style="font-size: 120px;">Backbone.js</b><br/>
+            <br/>
+        </q>        
+    </div>
+    
+    <div id="PatternsMVCBackboneModel" class="step slide" data-x="1000" data-y="3000">
+        <q style="text-align: center; margin-top: 30px;">
+            <b style="font-size: 50px;">Model</b>
+        </q>        
+        <pre style="margin-top: -20px;">
+                <code class="javascript">
+var User = Backbone.Model.extend({
+    defaults: {
+        name: 'John'
+    },
+    initialize: function () {
+        this.on("change:name", function() { /* ... */ });
+    },
+    validate: function (attrs) { /* ... */ },
+    changeName: function (value){
+        this.set({ name: value });
+    }
+});
+                </code>
+            </pre>
+    </div>
+    
+    <div id="PatternsMVCBackboneModelProperty" class="step slide" data-x="2000" data-y="3000">
+        <pre style="margin-top: -20px;">
+                <code class="javascript">
+var johnGold = new User({
+                    firstName: 'John', 
+                    secondName: 'Sold'
+                });
+
+johnGold.set({ secondName: 'Gold' }); // true
+
+johnGold.set({ firstName: '', secondName: 'Gold' }); // false
+
+console.log(johnGold.get('secondName')); // Gold                 
+
+johnGold.on('change:name', function () { 
+                        console.log(this.get('firstName')); // John
+                    });                    
+                </code>
+            </pre>
+    </div>
+    
+    <div id="PatternsMVCBackboneModelValidation" class="step slide" data-x="3000" data-y="3000">
+        <pre style="margin-top: -60px;">
+                <code class="javascript">                                                          
+Backbone.sync = function(method, user) {
+    var url = model.url();
+    // ...
+};                    
+var User = Backbone.Model.extend({
+    urlRoot: '/users'
+    parse: function (responce) { /* ... */ }
+});
+
+var johnGold = new User({ /* ... */ });      
+johnGold.save()                    
+
+var mikeSilver = new User({ id: 1 });
+mikeSilver.fetch();
+
+mikeSilver.destroy(); // R.I.P. :(
+                </code>
+            </pre>
+    </div>
+    <div id="PatternsMVCBackboneModelCollection" class="step slide" data-x="4000" data-y="3000">
+        <pre style="margin-top: -20px;">
+                <code class="javascript">                                                          
+var Users = Backbone.Collection.extend({
+                url: '/users',
+                model: User,
+                parse: function (responce) { /* ... */ }
+            });
+
+Users.fetch();
+
+var johnGold = Users.create({
+                    firstName: 'John', 
+                    secondName: 'Gold'});                    
+
+var mikeSiver = Users.where({ secondName: 'Silver'})[0];
+
+                </code>
+            </pre>
+    </div>
+    
+    <div id="PatternsMVCBackboneRouter" class="step slide" data-x="5000" data-y="3000">
+        <q style="text-align: center; margin-top: 30px;">
+            <b style="font-size: 50px;">Router</b>
+        </q>        
+        <pre style="margin-top: -20px;">
+                <code class="javascript">
+var Workspace = Backbone.Router.extend({
+    routes: {
+        'index': 'home',
+        'user/:id', 'details'
+    },
+    home: function() { /* ... */ },
+    details: function(id) { /* ... */ }
+});
+                    
+new Workspace();
+Backbone.history.start();
+                </code>
+            </pre>
+    </div>
+    
+    <div id="PatternsMVCBackboneView" class="step slide" data-x="6000" data-y="3000">
+        <q style="text-align: center; margin-top: 30px;">
+            <b style="font-size: 50px;">View</b>
+        </q>        
+        <pre style="margin-top: -20px;">
+                <code class="javascript">
+var UserView = Backbone.View.extend({
+    el: $('#user'),
+
+    events: {
+        'click .button.delete': 'delete'
+    },
+
+    render: function() { /*... */ },
+
+    delete: function() { /*... */ },    
+});
+                </code>
+            </pre>
+    </div>
+    
+    <div id="PatternsAura" class="step slide" data-x="-1000" data-y="3750">
+        <q style="text-align: center">
+            <b style="font-size: 120px;">Aura</b><br/>
+            Mediator + Facade + MVC
+            <br/>
+        </q>        
+    </div>
+    <div id="PatternsAuraMediator" class="step slide" data-x="0" data-y="3750">
+        <q style="text-align: center; margin-top: 30px;">
+            <b style="font-size: 50px;">Mediator / Core</b>
+        </q>        
+        <pre style="margin-top: -20px;">
+                <code class="javascript">
+define(['dom', 'underscore'], function ($, _) {
+    var mediator = {};
+
+    mediator.subscribe = function (event, handler) { /* ... */ };
+    mediator.publish = function (event, data) { /* ... */ };
+    
+    // ...
+});                       
+                </code>
+            </pre>
+    </div>
+    
+    <div id="PatternsAuraMediatorStart" class="step slide" data-x="1000" data-y="3750">       
+        <pre style="margin-top: -30px;">
+                <code class="javascript">
+// main.js
+// widgets/
+// widgets/users/
+// widgets/users/main.js
+// widgets/users/details.js
+// widgets/users/edit.js
+                                     
+mediator.start = function (channel, element) {
+    // ...
+    require(["widgets/" + channel + "/main"], function (main) {
+        main(element);
+    });
+};
+
+mediator.stop = function (channel) { /* ... */ };
+                </code>
+            </pre>
+    </div>
+    
+    <div id="PatternsAuraMediatorOther" class="step slide" data-x="2000" data-y="3750">       
+        <pre style="margin-top: -30px;">
+                <code class="javascript">
+mediator.dom = {
+		find: function (selector, context) {
+			    return $(context).find(selector);
+		},
+		data: function (selector, attribute) {
+			    return $(selector).data(attribute);
+		}                    
+    };
+
+mediator.template = { parse: _.template };
+
+mediator.utils = { /* ... */ };
+                </code>
+            </pre>
+    </div>
+    
+    <div id="PatternsAuraFacade" class="step slide" data-x="3000" data-y="3750">
+        <q style="text-align: center; margin-top: 30px;">
+            <b style="font-size: 50px;">Facade / Sandbox</b>
+        </q>        
+        <pre style="margin-top: -20px;">
+                <code class="javascript">
+define(['mediator', 'permissions'], 
+function (mediator, permissions) {
+    var facade = {};
+    facade.subscribe = function (event, subscriber, callback) {
+	if (permissions.validate(event, subscriber)) {
+			    mediator.subscribe(event, subscriber, callback);
+        }
+    };                    
+    facade.publish = function (event) {
+	mediator.publish.apply(mediator, arguments);
+    };
+});       
+                </code>
+            </pre>
+    </div>
+
+    <div id="PatternsAuraMain" class="step slide" data-x="4000" data-y="3750">
+        <pre style="margin-top: -20px;">
+                <code class="javascript">
+// main.js
+require(['mediator'], function (core) {
+	core.start('users', "#users");
+	core.start('calendar', "#calendar");
+});  
+                </code>
+            </pre>
+    </div>    
+
+    <div id="PatternsAuraMainUsers" class="step slide" data-x="5000" data-y="3750">
+        <pre style="margin-top: -20px;">
+                <code class="javascript">
+// widgets/users/main.js                 
+define(['facade', './views/users', './model/users'], 
+function (sandbox, UsersView, Users) {
+	return function (element) {
+            Users.fetch();
+
+		    new UsersView({
+                model: Users,
+			        el: sandbox.dom.find(element)
+		    });
+	};
+});
+                </code>
+            </pre>
+    </div>    
+    
+    
+    <div id="PatternsAuraBackboneMediator" class="step slide" data-x="6000" data-y="3750">
+        <q style="text-align: center; margin-top: 30px;">
+            <b style="font-size: 50px;"> Backbone Aura</b>
+        </q>        
+        <pre style="margin-top: -20px;">
+            <code class="javascript">
+define(["mediator", "backbone"], function (core, Backbone) {
+
+	var mediator = Object.create(core);
+	mediator.mvc = Backbone;
+
+	return mediator;
+});    
+            </code>
+            </pre>
+    </div>
+    
+    <div id="PatternsAuraBackboneFacade" class="step slide" data-x="7000" data-y="3750">
+        <pre style="margin-top: -20px;">
+            <code class="javascript">
+facade.mvc.View = function (view) {
+	return core.mvc.View.extend(view);
+};
+
+facade.mvc.Model = function (model) {
+	return core.mvc.Model.extend(model);
+};
+
+facade.mvc.Collection = function (collection) {
+	return core.mvc.Collection.extend(collection);
+};
+            </code>
+        </pre>
+    </div>    
+    <!--
+        
+        So to make a summary of all the possible attributes used to position presentation steps, we have:
+        
+        * `data-x`, `data-y`, `data-z` - they define the position of **the center** of step element on
+            the canvas in pixels; their default value is 0;
+        * `data-rotate-x`, `data-rotate-y`, 'data-rotate-z`, `data-rotate` - they define the rotation of
+            the element around given axis in degrees; their default value is 0; `data-rotate` and `data-rotate-z`
+            are exactly the same;
+        * `data-scale` - defines the scale of step element; default value is 1
+        
+        These values are used by impress.js in CSS transformation functions, so for more information consult
+        CSS transfrom docs: https://developer.mozilla.org/en/CSS/transform
+        
+    -->
+    <div id="overview" class="step" data-x="4000" data-y="1500" data-scale="10">
+    </div>
+
+</div>
+
+<!--
+    
+    Hint is not related to impress.js in any way.
+    
+    But it can show you how to use impress.js features in creative way.
+    
+    When the presentation step is shown (selected) its element gets the class of "active" and the body element
+    gets the class based on active step id `impress-on-ID` (where ID is the step's id)... It may not be
+    so clear because of all these "ids" in previous sentence, so for example when the first step (the one with
+    the id of `bored`) is active, body element gets a class of `impress-on-bored`.
+    
+    This class is used by this hint below. Check CSS file to see how it's shown with delayed CSS animation when
+    the first step of presentation is visible for a couple of seconds.
+    
+    ...
+    
+    And when it comes to this piece of JavaScript below ... kids, don't do this at home ;)
+    It's just a quick and dirty workaround to get different hint text for touch devices.
+    In a real world it should be at least placed in separate JS file ... and the touch content should be
+    probably just hidden somewhere in HTML - not hard-coded in the script.
+    
+    Just sayin' ;)
+    
+-->
+<div class="hint">
+    <p>Use a spacebar or arrow keys to navigate</p>
+</div>
+<script>
+    if ("ontouchstart" in document.documentElement) { 
+        document.querySelector(".hint").innerHTML = "<p>Tap on the left or right to navigate</p>";
+    }
+</script>
+
+<!--
+    
+    Last, but not least.
+    
+    To make all described above really work, you need to include impress.js in the page.
+    I strongly encourage to minify it first.
+    
+    In here I just include full source of the script to make it more readable.
+    
+    You also need to call a `impress().init()` function to initialize impress.js presentation.
+    And you should do it in the end of your document. Not only because it's a good practice, but also
+    because it should be done when the whole document is ready.
+    Of course you can wrap it in any kind of "DOM ready" event, but I was too lazy to do so ;)
+    
+-->
+<script src="js/impress.js"></script>
+<script>impress().init();</script>
+
+<!--
+    
+    The `impress()` function also gives you access to the API that controls the presentation.
+    
+    Just store the result of the call:
+    
+        var api = impress();
+    
+    and you will get three functions you can call:
+    
+        `api.init()` - initializes the presentation,
+        `api.next()` - moves to next step of the presentation,
+        `api.prev()` - moves to previous step of the presentation,
+        `api.goto( idx | id | element, [duration] )` - moves the presentation to the step given by its index number
+                id or the DOM element; second parameter can be used to define duration of the transition in ms,
+                but it's optional - if not provided default transition duration for the presentation will be used.
+    
+    You can also simply call `impress()` again to get the API, so `impress().next()` is also allowed.
+    Don't worry, it wont initialize the presentation again.
+    
+    For some example uses of this API check the last part of the source of impress.js where the API
+    is used in event handlers.
+    
+-->
+
+</body>
+</html>
+
+<!--
+    
+    Now you know more or less everything you need to build your first impress.js presentation, but before
+    you start...
+    
+    Oh, you've already cloned the code from GitHub?
+    
+    You have it open in text editor?
+    
+    Stop right there!
+    
+    That's not how you create awesome presentations. This is only a code. Implementation of the idea that
+    first needs to grow in your mind.
+    
+    So if you want to build great presentation take a pencil and piece of paper. And turn off the computer.
+    
+    Sketch, draw and write. Brainstorm your ideas on a paper. Try to build a mind-map of what you'd like
+    to present. It will get you closer and closer to the layout you'll build later with impress.js.
+    
+    Get back to the code only when you have your presentation ready on a paper. It doesn't make sense to do
+    it earlier, because you'll only waste your time fighting with positioning of useless points.
+    
+    If you think I'm crazy, please put your hands on a book called "Presentation Zen". It's all about 
+    creating awesome and engaging presentations.
+    
+    Think about it. 'Cause impress.js may not help you, if you have nothing interesting to say.
+    
+-->
+
+<!--
+    
+    Are you still reading this?
+    
+    For real?
+    
+    I'm impressed! Feel free to let me know that you got that far (I'm @bartaz on Twitter), 'cause I'd like
+    to congratulate you personally :)
+    
+    But you don't have to do it now. Take my advice and take some time off. Make yourself a cup of coffee, tea,
+    or anything you like to drink. And raise a glass for me ;)
+    
+    Cheers!
+    
+-->
+
