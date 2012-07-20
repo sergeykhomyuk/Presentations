@@ -470,7 +470,40 @@ console.log(john.name); // undefined
             </pre>
     </div>
     
-    <div id="FunctionAsClassInterface" class="step slide" data-x="3000" data-y="750">
+    <div id="FunctionAsClassInherit" class="step slide" data-x="3000" data-y="750">
+        <q style="text-align: center; margin-top: 30px;">
+            <b style="font-size: 70px;">Inherit</b>
+        </q>        
+        <pre >
+                <code class="javascript">
+var People = function(name) {
+    this.name = name;
+};
+People.prototype.getName = function() { return this.name; };
+
+var User = function() { /* ... */ };
+User.prototype = People.prototype;
+                </code>
+            </pre>
+    </div>
+
+    <div id="FunctionAsClassInheritViaExtend" class="step slide" data-x="4000" data-y="750">
+        <q style="text-align: center; margin-top: 30px;">
+            <b style="font-size: 70px;">Inherit via Extend</b>
+        </q>        
+        <pre >
+                <code class="javascript">
+$.extend(User.prototype, People.prototype);
+
+var User = Backbone.Model.extend({
+    initialize: function(login) { /* ... */ },
+    validate: function() { /* ... */ }
+});
+                </code>
+            </pre>
+    </div>    
+
+    <div id="FunctionAsClassInterface" class="step slide" data-x="5000" data-y="750">
         <q style="text-align: center; margin-top: 30px;">
             <b style="font-size: 70px;">Interface</b>
         </q>        
@@ -488,7 +521,28 @@ var aboutDialog = new Dialog();
 aboutDialog.publish('closed');
                 </code>
             </pre>
-    </div>
+    </div> 
+
+   <div id="FunctionAsClassStatic" class="step slide" data-x="6000" data-y="750">
+        <q style="text-align: center; margin-top: 30px;">
+            <b style="font-size: 70px;">Static</b>
+        </q>        
+        <pre >
+                <code class="javascript">
+var User = function(name) { /* ... */ };
+User.getById = function(id) { /* ... */ };
+User.save = function(user) { /* ... */ };
+
+var johnGold = User.getById(1);
+User.save(new User('Mike Silver'));
+
+$.extend(User.constructor, {
+   getById: function(id) { /* ... */ },
+   save: function(user) { /* ... */ }
+});
+                </code>
+            </pre>
+    </div>  
     
     
     <div id="Patterns" class="step slide" data-x="-2000" data-y="1500">
@@ -1149,6 +1203,16 @@ facade.mvc.Collection = function (collection) {
             <img src="img/javascript-web-apps.jpg" width="300px;" />
         </div>   
     </div>    
+
+    <div id="overview" class="step" data-x="4000" data-y="3000" data-scale="15">
+    </div>
+
+    <div id="Links" class="step" data-x="-3000" data-y="-3000">
+        <div style="font-size: 500px; text-align: center;">
+            <a href="http://homyuk.com/p/js">http://homyuk.com/p/js</a>
+            <a href="https://github.com/sergeyhomyuk/Presentations">https://github.com/sergeyhomyuk/Presentations</a>
+        </div>
+    </div>      
     <!--
         
         So to make a summary of all the possible attributes used to position presentation steps, we have:
@@ -1164,8 +1228,7 @@ facade.mvc.Collection = function (collection) {
         CSS transfrom docs: https://developer.mozilla.org/en/CSS/transform
         
     -->
-    <div id="overview" class="step" data-x="4000" data-y="3000" data-scale="15">
-    </div>
+
 
 </div>
 
