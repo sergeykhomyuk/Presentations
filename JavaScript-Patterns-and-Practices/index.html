@@ -10,7 +10,6 @@
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
         <link rel="stylesheet" type="text/css" href="css/github.css" />
         <script type="text/javascript" src="js/highlight.pack.js"></script>
-        <script type="text/javascript" src="js/knockout-2.1.0.js"></script>
         <script>
             hljs.initHighlightingOnLoad();
         </script>
@@ -66,8 +65,14 @@
         
         It will not be rotated or scaled.
         
-    -->
-    <div id="StartScreen" class="step slide" data-x="-3000" data-y="-1500" data-scale="1">
+        -->
+    <div id="StartScreen" class="step" data-x="4000" data-y="3000" data-scale="15">
+    </div>    
+    
+
+    <!-- Introduction to JS -->
+
+    <div id="JavaScriptPatternsAndPractices" class="step slide" data-x="-3000" data-y="-1500" data-scale="1">
         <q>
             <b style="font-size: 120px;">JavaScript</b>
             <br/>
@@ -87,12 +92,12 @@
         </q>
     </div>
 
-    <div id="TwoYearsAgo" class="step slide" data-x="-1000" data-y="-1500">
+    <div id="LongAgo" class="step slide" data-x="-1000" data-y="-1500">
         <q style="text-align: center">
-            <h1>Два года назад</h1>
+            <h1>3-4 года назад</h1>
         </q>
             <pre >
-            <code class="javascript">
+                <code class="javascript">
 function hide() {
     var item = document.getElementById('item');
     item.style.display = 'none';
@@ -101,12 +106,12 @@ function hide() {
             </pre>
     </div>
 
-    <div id="YearAgo" class="step slide" data-x="0" data-y="-1500">
+    <div id="FewYearsAgo" class="step slide" data-x="0" data-y="-1500">
         <q style="text-align: center; margin-top: 50px;">
-            <h1>Год назад</h1>
+            <h1>Пару лет назад</h1>
         </q>
             <pre >
-            <code class="javascript">
+                <code class="javascript">
 var rows = $('.bookmarkRow').map(function (index) {
     var key = $(this).attr('id').
                 replace(/bookmark\[(\d+,\d+)\]/, '$1');
@@ -126,7 +131,7 @@ var rows = $('.bookmarkRow').map(function (index) {
             <h1>Сейчас</h1>
         </q>
             <pre >
-            <code class="javascript">
+                <code class="javascript">
 define(['knockout', 'underscore', 'jquery', 'core'], 
     function (ko, _, $, core) {        
     'use strict';
@@ -143,27 +148,32 @@ define(['knockout', 'underscore', 'jquery', 'core'],
             </pre>
     </div>    
     
+    
+
+    <!--JavaScript Fundamentials-->
 
     <div id="Function" class="step slide" data-x="-2000" data-y="-750">
         <q style="text-align: center">
             <b style="font-size: 120px;">function<sup>*</sup></b>        
         </q>
-            <pre >
+        <pre >
             <code class="javascript">
 // * - наше всё
 fuction hello() {
     console.log('Hello world!');
 };
-                </code>
-            </pre>
+            </code>
+        </pre>
     </div>    
     
+    
+    <!-- Function as Scope -->
 
     <div id="FunctionAsScope" class="step slide" data-x="-1000" data-y="-0">
         <q style="text-align: center">
             <b style="font-size: 120px;">Область видимости</b><br/>
         </q>
-            <pre >
+        <pre >
             <code class="javascript">
 ​var i = 0;
 function foo() {
@@ -171,15 +181,15 @@ function foo() {
 }
 foo();
 console.log(i); // 0;
-                </code>
-            </pre>
+            </code>
+        </pre>
     </div>
     
     <div id="FunctionAsScopeFor" class="step slide" data-x="0" data-y="0">
         <pre >
             <code class="javascript">
 ​var sumOfSquares = 0;
-for(var j = 1; j < 5; j++) {
+for (var j = 1; j < 5; j++) {
     var tmp = j * j;
     sumOfSquares += tmp;
 }
@@ -195,7 +205,7 @@ console.log(tmp); // 16
 var j;
 var tmp;
 
-for(j = 1; j < 5; j++) {
+for (j = 1; j < 5; j++) {
     tmp = j * j;
     sumOfSquares += tmp;
 }
@@ -228,13 +238,12 @@ console.log(tmp); // 16
             <b style="font-size: 70px;">Module</b><br/>
         </q>
         <pre >
-                <code class="javascript">
+            <code class="javascript">
 (function () {
     // Module content
-    window.calculate = function (items) { /* ... */ }; // export
 }) ();
-                </code>
-            </pre>
+            </code>
+        </pre>
     </div>
 
     <div id="FunctionAsScopeModuleSample" class="step slide" data-x="4000" data-y="0">
@@ -258,16 +267,18 @@ subscribe('error', function(error) { /* ... */ });
             <b style="font-size: 70px;">Namespace</b><br/>
         </q>
         <pre >
-                <code class="javascript">
+            <code class="javascript">
 window.app = {};
-// ...
-app.utils = {
-    calc: function(items) { /* ... */ }
+app.core = {
+    utils: {
+        calc: function(items) { /* ... */ }
+    }
 };
+app.ui = { /* ... */ };
 // ...
-var result = app.utils.calc([1, 2, 3]);
-                </code>
-            </pre>
+var result = app.core.utils.calc([1, 2, 3]);
+            </code>
+        </pre>
     </div>    
 
     <div id="FunctionAsScopeModuleAndNamepspace" class="step slide" data-x="6000" data-y="0">
@@ -275,7 +286,7 @@ var result = app.utils.calc([1, 2, 3]);
             <b style="font-size: 70px;">Module + Namespace</b><br/>
         </q>
         <pre >
-                <code class="javascript">
+            <code class="javascript">
 // core.utils module
 (function ($, _) {
     app.utils = {
@@ -283,13 +294,34 @@ var result = app.utils.calc([1, 2, 3]);
         sum: function (items) { /* ... */ }
     };    
 }) (jquery, underscore, app = app || {});
-...
+// ...
 var max = app.utils.max([1, 2, 3, 4, 5]);
-                </code>
-            </pre>
+            </code>
+        </pre>
+    </div>
+
+    <div id="FunctionAsScopeNamespaceUtil" class="step slide" data-x="7000" data-y="0">
+        <pre >
+            <code class="javascript">
+var namespace = function (name) {
+    var names = name.split(".");
+    var current = global;
+    for (var i = 0; i < names.length; i++) {
+        var namespace = current[names[i]];
+        if (!namespace || typeof namespace !== "object") {
+            current[names[i]] = namespace = {};
+        }
+        current = namespace;
+    }
+    return current;
+};
+                
+var utils = namespace('app.core.utils');
+            </code>
+        </pre>
     </div>
     
-    <div id="FunctionAsScopeAMD" class="step slide" data-x="7000" data-y="0">
+    <div id="FunctionAsScopeAMD" class="step slide" data-x="8000" data-y="0">
         <q style="text-align: center">
             <b style="font-size: 70px;">AMD</b><br/>
             <b>Async Module Definition</b>
@@ -306,14 +338,14 @@ define(['jquery', 'app/core'], function($, core) {
             </pre>
     </div>
     
-    <div id="FunctionAsScopeRequireJs" class="step slide" data-x="8000" data-y="0">
+    <div id="FunctionAsScopeRequireJs" class="step slide" data-x="9000" data-y="0">
         <q style="text-align: center">
             <b style="font-size: 70px;">require.js</b><br/><br/>
             <img src="img/requirejs-logo.png" width="440" height="272"/>
         </q>        
     </div>
     
-    <div id="FunctionAsScopeRequireJsSample" class="step slide" data-x="9000" data-y="0">
+    <div id="FunctionAsScopeRequireJsSample" class="step slide" data-x="10000" data-y="0">
         <pre >
                 <code class="xml">
 &lt;script data-main="js/main.js" src="js/libs/require.js" /&gt;
@@ -334,10 +366,10 @@ require(['jquery', 'core'], function($, core) { /* ... */ });
             </pre>
     </div>
 
-    <div id="FunctionAsScopeRequireJsSampleReal" class="step slide" data-x="10000" data-y="0">
-        <pre >
-                <code class="javascript">
-// core.js
+    <div id="FunctionAsScopeRequireJsSampleReal" class="step slide" data-x="11000" data-y="0">
+        <pre style="margin-top: -20px;">
+            <code class="javascript">
+// Require.js + Namespace
 define(['core.class', 'core.events', 'core.utils', 'ui/core.ui'], 
 function(Class, Events, utils, ui) {
     return {
@@ -350,11 +382,26 @@ function(Class, Events, utils, ui) {
                                 
 require(['core'], function(core) {
     var User = core.Class.create();
+    var Grid = core.ui.controls.Grid;
 });
-                </code>
-            </pre>
+            </code>
+        </pre>
     </div>
     
+    <div id="FunctionAsScopeRequireMinification" class="step slide" data-x="12000" data-y="0">
+        <q style="text-align: center">
+            <b style="font-size: 70px;">Minification</b><br/><br/>
+        </q> 
+        <pre>
+            <code class="javascript">
+node ../../r.js -o name=main out=main.min.js baseUrl=./js    
+            </code>
+        </pre>  
+    </div>
+    
+    
+    <!-- Function as Class-->
+
     <div id="FunctionAsClass" class="step slide" data-x="-1000" data-y="750">
         <q style="text-align: center">
             <b style="font-size: 120px;">ООП <br/><br/> в JavaScript</b>
@@ -463,7 +510,10 @@ aboutDialog.publish('closed');
         <q style="text-align: center">
             <b style="font-size: 120px;">Knockout.js</b><br/>
             <br/>
-        </q>        
+        </q>    
+        <div style="text-align: center; padding-top: 30px;">
+            <a href="http://knockoutjs.com">http://knockoutjs.com</a>
+        </div>            
     </div>
 
     <div id="PatternsMVVMKnockoutJsSample" class="step slide" data-x="1000" data-y="2250">   
@@ -496,10 +546,31 @@ aboutDialog.publish('closed');
             <a style="color: blue; text-decoration: underline" href="http://jsfiddle.net/rniemeyer/LkqTU/">http://jsfiddle.net/rniemeyer/LkqTU</a>
         </q>        
     </div>
-    
-    <div id="PatternsMVVMKnockoutJsArchitectureController" class="step slide" data-x="3000" data-y="2250">   
+
+    <div id="PatternsMVVMKnockoutJsTemplates" class="step slide" data-x="3000" data-y="2250">   
         <pre style="margin-top: -20px;">
-                <code class="javascript">
+                <code class="xml">
+&lt;-- ko template: 
+    { name: 'user-template', foreach: users }" --&gt;&lt;-- /ko --&gt;
+ 
+&lt;script type="text/html" id="user-template"&gt;
+    &lt;h3 data-bind="text: name"&gt;/&lt;h3&gt;
+&lt;/script&gt;
+                    
+function UsersModel() {
+     this.users = [
+         { name: 'John Gold' },
+         { name: 'Mike Silver' }
+     ]
+ }
+ ko.applyBindings(new UsersModel());
+                </code>
+            </pre>
+    </div>
+    
+    <div id="PatternsMVVMKnockoutJsArchitectureController" class="step slide" data-x="4000" data-y="2250">   
+        <pre style="margin-top: -20px;">
+            <code class="javascript">
 var ApplicationController = core.Controller.create({
     config: function(route) {
         route.when('/', {
@@ -512,13 +583,13 @@ var ApplicationController = core.Controller.create({
                     });        
     },
     // ...
-                </code>
-            </pre>
+            </code>
+        </pre>
     </div>
 
-    <div id="PatternsMVVMKnockoutJsArchitecture" class="step slide" data-x="4000" data-y="2250">   
+    <div id="PatternsMVVMKnockoutJsArchitecture" class="step slide" data-x="5000" data-y="2250">   
         <pre >
-                <code class="javascript">
+            <code class="javascript">
     // ...
     createUser: function(template) {
         var model = new CreateUserModel();
@@ -550,7 +621,10 @@ var ApplicationController = core.Controller.create({
         <q style="text-align: center">
             <b style="font-size: 120px;">Backbone.js</b><br/>
             <br/>
-        </q>        
+        </q>     
+        <div style="text-align: center; padding-top: 30px;">
+            <a href="http://backbonejs.org">http://backbonejs.org</a>
+        </div>            
     </div>
     
     <div id="PatternsMVCBackboneModel" class="step slide" data-x="1000" data-y="3000">
@@ -585,7 +659,7 @@ var johnGold = new User({
 
 johnGold.set({ secondName: 'Gold' }); // true
 
-johnGold.set({ firstName: '', secondName: 'Gold' }); // false
+johnGold.set({ firstName: '', secondName: 'Silver' }); // false
 
 console.log(johnGold.get('secondName')); // Gold                 
 
@@ -598,7 +672,28 @@ johnGold.on('change:name', function () {
     
     <div id="PatternsMVCBackboneModelValidation" class="step slide" data-x="3000" data-y="3000">
         <pre style="margin-top: -60px;">
-                <code class="javascript">                                                          
+            <code class="javascript">                                                          
+var User = Backbone.Model.extend({
+    validate: function (attrs) {
+        if(!attrs.firstName) {
+            return 'First Name is empty';
+        }
+    }
+});
+
+var johnGold = new User({ /* ... */});
+johnGold.on('error', function(user, error) { 
+                console.log(error); 
+            });
+
+johnGold.set({ fistName: '' }); // First Name is empty
+            </code>
+        </pre>
+    </div>
+    
+    <div id="PatternsMVCBackboneSync" class="step slide" data-x="4000" data-y="3000">
+        <pre style="margin-top: -60px;">
+            <code class="javascript">                                                          
 Backbone.sync = function(method, user) {
     var url = model.url();
     // ...
@@ -618,7 +713,8 @@ mikeSilver.destroy(); // R.I.P. :(
                 </code>
             </pre>
     </div>
-    <div id="PatternsMVCBackboneModelCollection" class="step slide" data-x="4000" data-y="3000">
+
+    <div id="PatternsMVCBackboneModelCollection" class="step slide" data-x="5000" data-y="3000">
         <pre style="margin-top: -20px;">
                 <code class="javascript">                                                          
 var Users = Backbone.Collection.extend({
@@ -639,7 +735,7 @@ var mikeSiver = Users.where({ secondName: 'Silver'})[0];
             </pre>
     </div>
     
-    <div id="PatternsMVCBackboneRouter" class="step slide" data-x="5000" data-y="3000">
+    <div id="PatternsMVCBackboneRouter" class="step slide" data-x="6000" data-y="3000">
         <q style="text-align: center; margin-top: 30px;">
             <b style="font-size: 50px;">Router</b>
         </q>        
@@ -660,7 +756,7 @@ Backbone.history.start();
             </pre>
     </div>
     
-    <div id="PatternsMVCBackboneView" class="step slide" data-x="6000" data-y="3000">
+    <div id="PatternsMVCBackboneView" class="step slide" data-x="7000" data-y="3000">
         <q style="text-align: center; margin-top: 30px;">
             <b style="font-size: 50px;">View</b>
         </q>        
@@ -688,6 +784,7 @@ var UserView = Backbone.View.extend({
             <br/>
         </q>        
     </div>
+
     <div id="PatternsAuraMediator" class="step slide" data-x="0" data-y="3750">
         <q style="text-align: center; margin-top: 30px;">
             <b style="font-size: 50px;">Mediator / Core</b>
@@ -835,6 +932,223 @@ facade.mvc.Collection = function (collection) {
             </code>
         </pre>
     </div>    
+    
+    
+    <div id="ToolsAndResources" class="step slide" data-x="-2000" data-y="4500">
+        <q style="text-align: center">
+            <b style="font-size: 120px;">Инструменты и ресурсы</b>
+        </q>        
+    </div>
+    
+    <div id="ToolsAndResourcesVs" class="step slide" data-x="-1000" data-y="5250">
+            <q style="text-align: center; margin-top: 20px;">
+                <b style="font-size: 80px;">VS + JSParser + Re#</b>
+            </q>        
+        <div style="text-align: center; padding-top: 50px;">
+            <img src="img/jsparser.png" width="500px;" />
+        </div>
+        <div style="padding-top: 10px;">
+            <a href="http://visualstudiogallery.msdn.microsoft.com/288a2b0f-1357-47b4-8215-1134c36bdf30">http://visualstudiogallery.msdn.microsoft.com/288a2b0f-1357-47b4-8215-1134c36bdf30</a>
+        </div>
+    </div>    
+
+    <div id="ToolsAndResourcesChrome" class="step slide" data-x="0" data-y="5250">
+            <q style="text-align: center; margin-top: 20px;">
+                <b style="font-size: 80px;">Google Chrome</b>
+            </q>        
+        <div style="text-align: center; padding-top: 50px;">
+            <img src="img/chrome.png" width="800px;" />
+        </div>   
+    </div>        
+
+    <div id="ToolsAndResourcesJsFiddle" class="step slide" data-x="1000" data-y="5250">
+            <q style="text-align: center; margin-top: 20px;">
+                <b style="font-size: 80px;">JSFiddle.net</b>
+            </q>        
+        <div style="text-align: center; padding-top: 50px;">
+            <img src="img/jsfiddle.png" width="600px;" />
+        </div>
+        <div style="text-align: center; padding-top: 30px;">
+            <a href="http://jsfiddle.net">http://jsfiddle.net</a>
+        </div>
+    </div>
+
+    <div id="ToolsAndResourcesLiveReload" class="step slide" data-x="2000" data-y="5250">
+        <q style="text-align: center; margin-top: 20px;">
+            <b style="font-size: 80px;">LiveReload.com</b>
+        </q>        
+        <div style="text-align: center; padding-top: 50px;">
+            <img src="img/livereload.png" width="450px;" />
+        </div>
+        <div style="text-align: center; padding-top: 30px;">
+            <a href="http://livereload.com">http://livereload.com</a>
+        </div>
+    </div>
+    
+    <div id="ToolsAndResourcesGitHub" class="step slide" data-x="3000" data-y="5250">
+        <q style="text-align: center; margin-top: 20px;">
+            <b style="font-size: 80px;">GitHub.com</b>
+        </q>        
+        <div style="text-align: center; padding-top: 50px;">
+            <img src="img/github.png" width="700px;" />
+        </div>
+        <div style="text-align: center; padding-top: 30px;">
+            <a href="http://github.com">http://github.com</a>
+        </div>
+    </div>
+
+    <div id="ToolsAndResourcesSublime" class="step slide" data-x="4000" data-y="5250">
+        <q style="text-align: center; margin-top: 20px;">
+            <b style="font-size: 80px;">Sublime Text</b>
+        </q>        
+        <div style="text-align: center; padding-top: 50px;">
+            <img src="img/sumblime.png" width="700px;" />
+        </div>
+        <div style="text-align: center; padding-top: 30px;">
+            <a href="http://www.sublimetext.com">http://www.sublimetext.com</a>
+        </div>
+    </div>
+    
+    
+    <div id="ToolsAndResourcesUnderscore" class="step slide" data-x="-1000" data-y="6000">
+        <q style="text-align: center; margin-top: 40px;">
+            <b style="font-size: 80px;">Underscore.js</b>
+        </q>         
+        <pre style="margin-top: -20px;">
+            <code class="xml">
+&lt;% _.each(users, function(user) { %&gt;
+    &lt;span&gt;Name: &lt;/span&gt; &lt;%= user.Name %&gt;
+&lt;%= }) %&gt;
+            </code>
+        </pre>
+        <div style="text-align: center; padding-top: 30px;">
+            <a href="http://underscorejs.org">http://underscorejs.org</a>
+        </div>
+    </div>
+    
+    <div id="ToolsAndResourcesAmplify" class="step slide" data-x="0" data-y="6000">
+        <q style="text-align: center; margin-top: 40px;">
+            <b style="font-size: 80px;">Amplify.js</b>
+        </q>         
+        <div style="font-size: 60px; text-align: center; padding-top: 40px;">
+            <div style="margin: 30px;">Request</div>
+            <div style="margin: 30px;">Store</div>
+            <div style="margin: 30px;">Pub/Sub</div>
+        </div>
+        <div style="text-align: center; padding-top: 30px;">
+            <a href="http://amplifyjs.org">http://amplifyjs.org</a>
+        </div>
+    </div>
+    
+    <div id="ToolsAndResourcesAngular" class="step slide" data-x="1000" data-y="6000">
+        <q style="text-align: center; margin-top: 40px;">
+            <b style="font-size: 80px;">Angular.js</b>
+        </q>         
+        <div style="text-align: center; padding-top: 30px;">
+            <a href="http://angularjs.org">http://angularjs.org</a>
+        </div>
+    </div>
+   
+<div id="ToolsAndResourcesAddy" class="step slide" data-x="-1000" data-y="6750">
+        <q style="text-align: center; margin-top: 20px;">
+            <b style="font-size: 80px;">Addy Osmani</b>
+        </q>        
+    <div style="text-align: center; padding-top: 50px;">
+        <img src="img/addy.png" width="600px;" />
+    </div>
+    <div style="text-align: center; padding-top: 30px;">
+        <a href="http://addyosmani.com">http://addyosmani.com</a>
+    </div>
+</div>    
+   
+<div id="ToolsAndResourcesAdobe" class="step slide" data-x="0" data-y="6750">
+        <q style="text-align: center; margin-top: 20px;">
+            <b style="font-size: 80px;">Adobe HTML5 Center</b>
+        </q>        
+    <div style="text-align: center; padding-top: 30px;">
+        <a href="http://www.adobe.com/devnet/html5.html ">http://www.adobe.com/devnet/html5.html </a>
+    </div>
+</div>     
+
+    <div id="ToolsAndResourcesApplines" class="step slide" data-x="1000" data-y="6750">
+        <q style="text-align: center; margin-top: 20px;">
+            <b style="font-size: 80px;">Applines.com</b>
+        </q>        
+    <div style="text-align: center; padding-top: 50px;">
+        <img src="img/applines.jpg" width="600px;" />
+    </div>
+    <div style="text-align: center; padding-top: 30px;">
+        <a href="http://applines.com">http://applines.com</a>
+    </div>
+</div> 
+        
+    <div id="ToolsAndResourcesBrackets" class="step slide" data-x="2000" data-y="6750">
+        <q style="text-align: center; margin-top: 40px;">
+            <b style="font-size: 80px;">Adobe Brackets</b>
+        </q>         
+        <div style="text-align: center; padding-top: 50px;">
+            <img src="img/brackets.png" width="600px;" />
+        </div>
+        <div style="text-align: center; padding-top: 30px;">
+            <a href="https://github.com/adobe/brackets/">https://github.com/adobe/brackets/</a>
+        </div>
+    </div>
+    
+    <div id="ToolsAndResourcesTwitter" class="step slide" data-x="3000" data-y="6750">
+        <q style="text-align: center; margin-top: 40px;">
+            <b style="font-size: 80px;">Twitter</b>
+        </q>         
+        <div style="font-size: 60px; text-align: center; padding-top: 40px;">
+            <div style="margin: 30px;">@maccman</div>
+            <div style="margin: 30px;">@azproduction</div>
+            <div style="margin: 30px;">@alexbeletsky</div>
+        </div>
+    </div>
+    
+    <div id="ToolsAndResourcesPodcast" class="step slide" data-x="4000" data-y="6750">
+        <q style="text-align: center; margin-top: 40px;">
+            <b style="font-size: 80px;">JavaScript Jabber Podcast</b>
+        </q>         
+        <div style="text-align: center; padding-top: 30px;">
+            <a href="http://javascriptjabber.com/">http://javascriptjabber.com/</a>
+        </div>
+    </div>
+    
+    <div id="ToolsAndResourcesStyleGuide" class="step slide" data-x="5000" data-y="6750">
+        <q style="text-align: center; margin-top: 40px;">
+            <b style="font-size: 80px;">Idiomatic.js</b>
+        </q>         
+        <div style="text-align: center; padding-top: 30px;">
+            <a href="https://github.com/rwldrn/idiomatic.js/">https://github.com/rwldrn/idiomatic.js/</a>
+        </div>
+    </div>
+    
+    <div id="ToolsAndResourcesGoodParts" class="step slide" data-x="-1000" data-y="7500">
+        <q style="text-align: center; margin-top: 20px;">
+            <b style="font-size: 80px;">JavaScript: GoodParts</b>
+        </q>        
+        <div style="text-align: center; padding-top: 50px;">
+            <img src="img/javascript-goodparts.jpg" width="300px;" />
+        </div>   
+    </div>    
+    
+    <div id="ToolsAndResourcesPatterns" class="step slide" data-x="0" data-y="7500">
+            <q style="text-align: center; margin-top: 20px;">
+                <b style="font-size: 80px;">JavaScript: Patterns</b>
+            </q>        
+        <div style="text-align: center; padding-top: 50px;">
+            <img src="img/javascript-patterns.jpg" width="300px;" />
+        </div>   
+    </div>    
+    
+    <div id="ToolsAndResourcesWebApps" class="step slide" data-x="1000" data-y="7500">
+            <q style="text-align: center; margin-top: 20px;">
+                <b style="font-size: 80px;">JavaScript: Web Applications</b>
+            </q>        
+        <div style="text-align: center; padding-top: 50px;">
+            <img src="img/javascript-web-apps.jpg" width="300px;" />
+        </div>   
+    </div>    
     <!--
         
         So to make a summary of all the possible attributes used to position presentation steps, we have:
@@ -850,7 +1164,7 @@ facade.mvc.Collection = function (collection) {
         CSS transfrom docs: https://developer.mozilla.org/en/CSS/transform
         
     -->
-    <div id="overview" class="step" data-x="4000" data-y="1500" data-scale="10">
+    <div id="overview" class="step" data-x="4000" data-y="3000" data-scale="15">
     </div>
 
 </div>
@@ -883,7 +1197,7 @@ facade.mvc.Collection = function (collection) {
     <p>Use a spacebar or arrow keys to navigate</p>
 </div>
 <script>
-    if ("ontouchstart" in document.documentElement) { 
+    if ("ontouchstart" in document.documentElement) {
         document.querySelector(".hint").innerHTML = "<p>Tap on the left or right to navigate</p>";
     }
 </script>
