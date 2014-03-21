@@ -1,0 +1,321 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
+    title Angular.js Patterns & Practices
+
+    link(href='http://fonts.googleapis.com/css?family=Open+Sans:300,600', rel='stylesheet', type='text/css')
+
+    // build:css styles/styles.css
+    link(rel='stylesheet', type='text/css', href='bower_components/prism/themes/prism-twilight.css')
+    link(rel='stylesheet', type='text/css', href='styles/main.css')
+    // endbuild
+
+  body
+
+    article
+
+      section
+        h2 Angular.js Patterns & Practices
+        h3
+          span.focus Сергей Хомюк
+
+      section.light(data-bespoke-state='green')
+        h3 issue #1
+        h2 структура проекта
+
+      section      
+        pre.language-javascript
+          code.
+              /module
+                /controllers
+                /directives
+                /services
+                /filters
+                /models
+
+                /module.js // required
+                /module.config.js
+                /module.routes.js
+                /module.start.js
+
+      section      
+        pre.language-javascript
+          code.
+              app
+                /admin
+                /user
+                /common
+                /core                
+                /lunchtime.js
+                /lunchtime.config.js
+                /lunchtime.routes.js
+                /lunchtime.start.js
+      section      
+        pre.language-javascript
+          code.
+              /admin
+                /menu
+                  /controllers
+                  /directives
+                  /services
+                  /filters
+                  /models
+                  /adminMenu.js
+                /sales 
+                  // ...
+                /admin.js
+                /admin.config.js
+                /admin.routes.js
+
+      section.light(data-bespoke-state='green')
+        h3 issue #2
+        h2 загрузка приложения
+
+      section      
+        h1 require.js
+        pre.language-javascript
+          code.
+            define(            
+              ['jquery', 'angular'], // dependencies
+              function($, angular) { // callback              
+                // ...
+
+                return {
+                  // export
+                };
+              }
+            );
+
+      section
+        pre.language-javascript
+          code.
+            // main.js
+            (function (require, view) {
+                'use strict';
+
+                require(['angular', 'lunchtime'], function (angular, lunchtime) {
+                  angular.bootstrap(view, [lunchtime.name]);
+                });
+
+            }(require, document));            
+
+      section
+        pre.language-javascript
+          code.
+            // main.js > lunchtime.js
+            define(['angular', 'angular-route', 'lunchtime.config', 
+              'user/user.js', 'admin/admin.js', 'common/common.js', 'core/core.js'],
+              function(angular, ngRoute, config, userModule, adminModule, /* ... */) {   
+                'use strict';
+
+                var dependencies = ['ngRoute', userModule.name, adminModule.name, /* ... */];
+                var lunchtime = angular.module('lunchtime', dependencies);
+
+                lunchtime.constant('config', config);
+
+                return lunchtime;
+              });
+
+      section
+        pre.language-javascript
+          code.
+            // main.js > lunchtime.js > /user/user.js
+            define(['angular', 'user/services/services.js', 'user/controllers/controllers.js',
+              /* ... */, 'user/user.config', 'user/user.routes.js'],
+              function(angular, services, controllers, /* ... */, userConfig, userRoutes) {   
+                'use strict';
+
+                var dependencies = ['ngRoute', services.name, controllers.name, /* ... */];
+                var userModule = angular.module('lunchtime.user', dependencies);
+
+                userModule.constant('user.config', userConfig);
+                userModule.config(userRoutes);
+
+                return userModule;
+              }); 
+
+      section
+        pre.language-javascript
+          code.
+            // main.js > lunchtime.js > /user/user.js > /user/services/services.js
+            define(['angular', 'user/services/userApiService', 'user/services/userService'],
+              function(angular, userApiService, userService) {       
+                'use strict';    
+
+                var userServicesModule = angular.module('lunchtime.user.services', []);
+
+                userServicesModule.service('userApiService', userApiService);
+                userServicesModule.service('userService', userService);
+
+                return userServicesModule;
+              });   
+
+      section
+        pre.language-javascript
+          code.
+            // main.js > ... > /user/services/services.js > /user/services/userService.js
+            define(['common/models/user', 'framework/assert'], function(User, assert) {    
+                'use strict';
+
+                var userService = [
+                'session', 'userApiService',
+                function(session, userApiService) {
+                  return {
+                    // ...
+                  };
+                }];               
+
+                return userService;
+              });  
+      section
+        h2 мимификация
+        pre.language-javascript
+          code.
+            @if (UseMinifiedScripts)
+            {
+                &ltscript src="@Url.CachedContent("~/Scripts/Libs/require/require.min.js")"&gt&lt/script&gt
+                &ltscript src="@Url.CachedContent("~/Scripts/Libs/libs.min.js")"&gt&lt/script&gt
+                &ltscript src="@Url.CachedContent("~/Scripts/LunchTime/LunchTime.min.js")"&gt&lt/script&gt
+                &ltscript src="@Url.CachedContent("~/Scripts/LunchTime/main.js")"&gt&lt/script&gt
+            }
+            else
+            {
+                &ltscript src="@Url.Content("~/Scripts/Libs/require/require.js")" 
+                  data-main="../../Scripts/LunchTime/main.dev"&gt&lt/script&gt
+            }                
+
+      section.light(data-bespoke-state='green')
+        h3 issue #3
+        h2 слабая типизация
+
+      section
+        pre.language-javascript
+          code.
+            /*
+             * Login with specified credentials.
+             * @param {string} login - user login. 
+             * @param {string} password - user password. 
+             * @return {object} user model.
+             */
+            login: function(login, password) {
+              assert.isNotNull(login, 'login');
+              assert.isNotNull(password, 'password');
+
+              var user = new User({ login: login, password: password });
+              session.set('currentUser', user);
+              
+              return user;
+            }
+
+      section      
+        pre.language-javascript
+          code.
+            var johnGold = new User({
+              login: 'john.gold',
+              password: 'qqq111'
+             });
+            // or
+            var johtGold = new User('john.gold', 'qqq111');
+
+      section      
+        pre.language-javascript
+          code.
+            /**
+             * User.
+             * @param {string} login - user login. 
+             * @param {string} password - user password.
+             * @constructor
+             */
+            var User = function(login, password) {
+                if (arguments.length === 1) {
+                    var user = arguments[0];
+                    return new User(user.login, user.password);
+                }
+                assert.isNotNull(login, 'login');
+                assert.isNotNull(password, 'password');
+                this.login = login;
+                this.password = password;
+            };  
+
+      section      
+        h2 class.js
+        pre.language-javascript
+          code.
+             var Person = Class(
+                function() {
+                  // constructor
+                }, 
+                {
+                  // instance members
+                },
+                {
+                  // class members
+                });
+           
+      section.light(data-bespoke-state='green')
+        h3 issue #4
+        h2 связи между компонентами
+
+      section
+        h2 связь через наследование $scope
+        h3 (директива === интерфейс)
+
+      section
+        img(src='images/UserOrders.png')        
+      
+      section      
+        pre.language-javascript
+          code.
+            &ltlt:user-menu-courses 
+                courses="courses"
+                is-freezed="isFreezed"
+                wished-courses="wishedCourses"
+                on-order-course="orderCourse(course, quantity)"&gt          
+            &lt/lt:user-menu-courses&gt
+
+            &ltlt:user-menu-orders 
+                orders="orders"
+                is-freezed="isFreezed"
+                on-remove-order="removeOrder(order)"
+                on-move-order-to-box="moveOrderToBox(order, box)"&gt
+            &lt/lt:user-menu-orders&gt   
+
+      section      
+        pre.language-javascript
+          code.
+            var userMenuCourses = [function () {
+                return {
+                    restrict: 'AE',
+                    templateUrl: '/template/user/menu/courses.tmpl',
+                    scope: {
+                        courses: '=',
+                        wishedCourses: '=',
+                        isFreezed: '=',
+                        onOrderCourse: '&'
+                    },
+                    controller: 'userMenuCoursesController'
+                };
+            }];          
+
+       section.light(data-bespoke-state='green')
+        h3 issue #5
+        h2 структура controller
+        h3 (demo)
+
+      section
+        h2 спасибо за внимание!
+
+    // build:js scripts/scripts.js
+    script(src='bower_components/bespoke.js/dist/bespoke.min.js')
+    script(src='bower_components/bespoke-keys/dist/bespoke-keys.min.js')
+    script(src='bower_components/bespoke-touch/dist/bespoke-touch.min.js')
+    script(src='bower_components/bespoke-bullets/dist/bespoke-bullets.min.js')
+    script(src='bower_components/bespoke-scale/dist/bespoke-scale.min.js')
+    script(src='bower_components/bespoke-hash/dist/bespoke-hash.min.js')
+    script(src='bower_components/bespoke-progress/dist/bespoke-progress.min.js')
+    script(src='bower_components/bespoke-state/dist/bespoke-state.min.js')
+    script(src='bower_components/prism/prism.js')
+    script(src='scripts/main.js')
+    // endbuild
